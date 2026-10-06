@@ -34,12 +34,14 @@
     "react-native": "0.86.3",
     "react-native-date-picker": "^5.0.13",
     "react-native-gesture-handler": "~2.32.0",
+    "react-native-keyboard-controller": "1.21.9",
     "react-native-mmkv": "^4.3.2",
     "react-native-otp-entry": "^1.8.6",
     "react-native-qrcode-svg": "^6.3.26",
     "react-native-reanimated": "4.5.1",
     "react-native-safe-area-context": "~5.7.0",
     "react-native-screens": "~4.26.0",
+    "react-native-svg": "15.15.4",
     "react-native-toast-message": "^2.5.2",
     "react-native-vision-camera": "^5.2.3",
     "react-native-worklets": "0.10.1",
@@ -49,6 +51,7 @@
   },
   "devDependencies": {
     "@types/react": "~19.2.2",
+    "react-native-svg-transformer": "^1.5.3",
     "typescript": "~6.0.3"
   },
   "scripts": {
