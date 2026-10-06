@@ -1,5 +1,5 @@
 import { createMMKV } from "react-native-mmkv";
-import { AuthTypes } from "./types";
+import { AuthTypes } from "./auth.types";
 
 const storage = createMMKV({ id: "auth-storage" });
 

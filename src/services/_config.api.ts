@@ -1,4 +1,4 @@
-import { AuthStorage } from "@/auth/utils";
+import { AuthStorage } from "@/auth/auth.utils";
 import { ApiTypes } from "@/types/types.api";
 import axios from "axios";
 
