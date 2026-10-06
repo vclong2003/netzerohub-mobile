@@ -1,3 +1,9 @@
+export interface IRnFile {
+  uri: string;
+  name: string;
+  type: string;
+}
+
 export enum EAccountRole {
   User = "User",
   Admin = "Admin",

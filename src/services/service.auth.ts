@@ -22,6 +22,20 @@ export namespace AuthMutations {
     refreshToken: string;
   }
 
+  export interface IRegisterPayload {
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+    avatarUrl?: string;
+    phone?: string;
+  }
+
+  export interface IVerifyAccountPayload {
+    email: string;
+    otp: string;
+  }
+
   export function useLogin() {
     const queryClient = useQueryClient();
 
@@ -31,6 +45,24 @@ export namespace AuthMutations {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["useMyAccount"] });
       },
+    });
+  }
+
+  export function useRegister() {
+    return useMutation({
+      mutationKey: ["useRegister"],
+      mutationFn: (payload: IRegisterPayload) =>
+        api.post("/auth/register", payload),
+    });
+  }
+
+  export function useVerifyAccount() {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+      mutationKey: ["useVerifyAccount"],
+      mutationFn: (payload: IVerifyAccountPayload) =>
+        api.post("/auth/verify", payload),
     });
   }
 }
