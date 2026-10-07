@@ -68,7 +68,7 @@ export default function AppTabs() {
         }}
       />
       <Tabs.Screen
-        name="myhub"
+        name="my-hub"
         options={{
           title: "My NetZero",
           tabBarIcon: ({ color, size }) => (

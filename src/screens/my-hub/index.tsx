@@ -47,7 +47,7 @@ export function MyHub() {
             variant="gray"
             preIcon={<CaretRightBlackSvg width={16} height={16} />}
             style={styles.button}
-            // onPress={() => navigate("Settings__Profile_Update")}
+            onPress={() => router.push("/update-account")}
           />
         </View>
         <View style={{ height: 32 }} />

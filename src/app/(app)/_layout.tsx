@@ -23,7 +23,7 @@ export default function AppLayout() {
     <Stack
       screenOptions={{
         headerShown: false,
-        contentStyle: { flex: 1 },
+        contentStyle: { flex: 1, backgroundColor: "#fff" },
       }}
     />
   );

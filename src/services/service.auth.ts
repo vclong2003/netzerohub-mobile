@@ -36,12 +36,32 @@ export namespace AuthMutations {
     otp: string;
   }
 
+  export interface IUpdateAccountPayload {
+    firstName?: string;
+    lastName?: string;
+    avatarUrl?: string;
+    phone?: string;
+  }
+
   export function useLogin() {
     const queryClient = useQueryClient();
 
     return useMutation<ILoginResponse, unknown, ILoginPayload>({
       mutationKey: ["useLogin"],
       mutationFn: (payload: ILoginPayload) => api.post("/auth/login", payload),
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["useMyAccount"] });
+      },
+    });
+  }
+
+  export function useUpdateAccount() {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+      mutationKey: ["useUpdateAccount"],
+      mutationFn: (payload: IUpdateAccountPayload) =>
+        api.put("/account/me", payload),
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["useMyAccount"] });
       },
