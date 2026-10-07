@@ -1,9 +1,3 @@
-import { Text, View } from "react-native";
+import { RecyclingCenters } from "@/screens/recycling-centers";
 
-export default function RecyclingCenters() {
-  return (
-    <View style={{ flex: 1 }}>
-      <Text>Recycling Centers</Text>
-    </View>
-  );
-}
+export default RecyclingCenters;

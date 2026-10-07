@@ -23,9 +23,9 @@ export function SearchBar() {
   return (
     <>
       <View style={[styles.wrapper, { top }]}>
-        <SimpleLineIcons name="magnifier" size={24} color="black" />
+        <SimpleLineIcons name="magnifier" size={22} color="#128085" />
         <TextInput
-          placeholder="Search"
+          placeholder="Enter street, suburb or postcode"
           style={styles.textInput}
           value={query}
           onChangeText={setQuery}
@@ -35,7 +35,7 @@ export function SearchBar() {
           <MaterialIcons
             name="cancel"
             size={20}
-            color="black"
+            color="#747474"
             onPress={() => {
               setQuery("");
               Keyboard.dismiss();
@@ -82,7 +82,7 @@ export const styles = StyleSheet.create({
     color: "#128085",
     flex: 1,
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "500",
     paddingVertical: 0,
   },
 

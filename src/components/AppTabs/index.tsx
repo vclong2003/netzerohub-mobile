@@ -1,10 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import Fa6Icons from "@expo/vector-icons/FontAwesome6";
 
-import { BlurView } from "expo-blur";
 import { Tabs } from "expo-router";
 import { PlatformPressable } from "expo-router/build/react-navigation";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 export default function AppTabs() {
   return (
@@ -12,8 +11,7 @@ export default function AppTabs() {
       screenOptions={{
         headerShown: false,
         tabBarBackground: () => (
-          <BlurView
-            intensity={70}
+          <View
             style={{
               ...StyleSheet.absoluteFill,
               backgroundColor: "rgb(255, 255, 255)",
@@ -47,7 +45,7 @@ export default function AppTabs() {
         tabBarInactiveTintColor: "#A0AEC0",
         tabBarActiveTintColor: "#128085",
 
-        animation: "shift",
+        animation: "fade",
       }}>
       <Tabs.Screen
         name="index"

@@ -1,8 +1,11 @@
 export namespace MapTypes {
   export const MAPBOX_GEOCODE_API = "https://api.mapbox.com/search/geocode/v6";
   export const MAPBOX_DIRECTIONS_API = "https://api.mapbox.com/directions/v5";
+
   export const MAPBOX_STYLE_URL =
     "mapbox://styles/vclong2003/cm4jpqw6m00bh01sf3iq9g8rf";
+  export const MAPBOX_STYLE_URL_1 =
+    "mapbox://styles/vclong2003/cmuy7hoog001k01re5d1m0x89";
 
   export const MAPBOX_ACCESS_TOKEN =
     "sk.eyJ1IjoidmNsb25nMjAwMyIsImEiOiJjbTFuOHU0MW8wb2QzMmtxdGt4NGE0NDJ4In0.R6WnMSJimChYG0A6PAA5_Q";
