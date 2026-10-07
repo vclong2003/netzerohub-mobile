@@ -1,9 +1,9 @@
 import { Text, View } from "react-native";
 
-export default function Screen2() {
+export default function RecyclingCenters() {
   return (
     <View style={{ flex: 1 }}>
-      <Text>Screen 2</Text>
+      <Text>Recycling Centers</Text>
     </View>
   );
 }

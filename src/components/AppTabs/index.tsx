@@ -1,4 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
+import Fa6Icons from "@expo/vector-icons/FontAwesome6";
+
 import { BlurView } from "expo-blur";
 import { Tabs } from "expo-router";
 import { PlatformPressable } from "expo-router/build/react-navigation";
@@ -26,7 +28,7 @@ export default function AppTabs() {
           bottom: 24,
           borderRadius: 12,
           overflow: "hidden",
-          paddingTop: 8,
+          paddingTop: 10,
 
           backgroundColor: "transparent",
           borderTopWidth: 0,
@@ -51,18 +53,18 @@ export default function AppTabs() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: "Green Charging",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" size={size} color={color} />
+            <Fa6Icons name="charging-station" size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="screen2"
+        name="recycling-centers"
         options={{
-          title: "Screen 2",
+          title: "Recycling",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="compass" size={size} color={color} />
+            <Fa6Icons name="recycle" size={size} color={color} />
           ),
         }}
       />
@@ -71,7 +73,7 @@ export default function AppTabs() {
         options={{
           title: "My Hub",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="compass" size={size} color={color} />
+            <Ionicons name="leaf" size={size} color={color} />
           ),
         }}
       />
