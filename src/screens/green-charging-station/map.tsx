@@ -42,7 +42,7 @@ const MOCK_STATIONS = [
 export function Map() {
   const { bottom } = useSafeAreaInsets();
   const { requestPermission } = useLocationPermission();
-  const cameraRef = useRef(null);
+  const cameraRef = useRef<Mapbox.Camera | null>(null);
   const [isFollowUserLocation, setIsFollowUserLocation] = useState(true);
   const { setSelectedLotId, selectedLocation, setSelectedLocation } =
     useGreenChargingStationsContext();
@@ -57,6 +57,25 @@ export function Map() {
   }, [cameraRef, setIsFollowUserLocation]);
 
   console.log("GreenChargingStations rendered");
+
+  const zoomToSelectedLocation = useCallback(() => {
+    if (!selectedLocation) return;
+    setIsFollowUserLocation(false);
+    setTimeout(
+      () =>
+        cameraRef?.current?.setCamera({
+          centerCoordinate: [selectedLocation.lon, selectedLocation.lat],
+          zoomLevel: 14,
+          animationDuration: 1000,
+        }),
+      200,
+    );
+  }, [cameraRef, selectedLocation, setIsFollowUserLocation]);
+
+  useEffect(() => {
+    if (!selectedLocation) return;
+    zoomToSelectedLocation();
+  }, [selectedLocation, zoomToSelectedLocation]);
 
   return (
     <View style={{ flex: 1 }}>
