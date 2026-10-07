@@ -1,9 +1,10 @@
 import { Ionicons } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import { Tabs } from "expo-router";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { PlatformPressable } from "expo-router/build/react-navigation";
+import { StyleSheet } from "react-native";
 
-export default function TabLayout() {
+export default function AppTabs() {
   return (
     <Tabs
       screenOptions={{
@@ -14,7 +15,7 @@ export default function TabLayout() {
             tint="light"
             style={{
               ...StyleSheet.absoluteFill,
-              backgroundColor: "rgba(11, 10, 10, 0.25)",
+              backgroundColor: "rgba(11, 10, 10, 0.2)",
             }}
           />
         ),
@@ -25,7 +26,7 @@ export default function TabLayout() {
           bottom: 24,
           borderRadius: 12,
           overflow: "hidden",
-          paddingBottom: 10,
+          paddingTop: 8,
 
           backgroundColor: "transparent",
           borderTopWidth: 0,
@@ -34,10 +35,7 @@ export default function TabLayout() {
         },
 
         tabBarButton: (props) => (
-          <TouchableOpacity
-            {...props}
-            style={[props.style, { flex: 1, padding: 8 }]}
-          />
+          <PlatformPressable {...props} pressColor="transparent" />
         ),
 
         tabBarLabelStyle: {
@@ -47,6 +45,8 @@ export default function TabLayout() {
 
         tabBarInactiveTintColor: "#fff",
         tabBarActiveTintColor: "#128085",
+
+        animation: "shift",
       }}>
       <Tabs.Screen
         name="index"
@@ -58,9 +58,18 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="screen1"
         options={{
-          title: "Explore",
+          title: "Screen 1",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="compass" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="screen2"
+        options={{
+          title: "Screen 2",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="compass" size={size} color={color} />
           ),

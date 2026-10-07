@@ -3,7 +3,7 @@ import { Button } from "@/components/Button";
 import { Header } from "@/components/Header";
 import { TextInput } from "@/components/TextInput";
 import { AuthMutations } from "@/services/service.auth";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -19,6 +19,7 @@ import EyeSvg from "@/assets/svgs/Eye.svg";
 import PasswordSvg from "@/assets/svgs/Lock.svg";
 
 export default function Login() {
+  const { email } = useLocalSearchParams<{ email?: string }>();
   const { bottom } = useSafeAreaInsets();
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
   const { mutate: login, isPending } = AuthMutations.useLogin();
@@ -39,7 +40,7 @@ export default function Login() {
 
   const { control, handleSubmit } = useForm<AuthMutations.ILoginPayload>({
     values: {
-      email: "",
+      email: email || "",
       password: "",
     },
   });
@@ -90,7 +91,8 @@ export default function Login() {
             />
           )}
         />
-        <View style={{ height: 12 }} />
+
+        <View style={{ height: 24 }} />
         <Button
           variant="green"
           text="Log in"
@@ -103,7 +105,7 @@ export default function Login() {
       </KeyboardAwareScrollView>
       <Text
         style={[styles.registerText, { bottom: bottom + 16 }]}
-        onPress={() => navigation.navigate("Register")}>
+        onPress={() => router.push("/auth/register")}>
         Don’t have an account?{" "}
         <Text style={styles.registerTextColored}>Sign up</Text>
       </Text>
