@@ -26,7 +26,7 @@ export default function MyHub() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <Header title="My NetZero Hub" />
       <View style={styles.wrapper}>
         <Text style={styles.sectionTitle}>Account</Text>
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     borderRadius: 12,
-    backgroundColor: "#F6F6F6",
+    backgroundColor: "#f9f9f9",
     paddingVertical: 8,
     paddingHorizontal: 12,
     gap: 8,

@@ -9,15 +9,15 @@ import { StyleSheet } from "react-native";
 export default function AppTabs() {
   return (
     <Tabs
+      initialRouteName="green-charging-stations/index"
       screenOptions={{
         headerShown: false,
         tabBarBackground: () => (
           <BlurView
-            intensity={40}
-            tint="light"
+            intensity={70}
             style={{
               ...StyleSheet.absoluteFill,
-              backgroundColor: "rgba(11, 10, 10, 0.2)",
+              backgroundColor: "rgb(255, 255, 255)",
             }}
           />
         ),
@@ -41,17 +41,17 @@ export default function AppTabs() {
         ),
 
         tabBarLabelStyle: {
-          fontSize: 11,
+          fontSize: 12,
           fontWeight: "700",
         },
 
-        tabBarInactiveTintColor: "#fff",
+        tabBarInactiveTintColor: "#A0AEC0",
         tabBarActiveTintColor: "#128085",
 
         animation: "shift",
       }}>
       <Tabs.Screen
-        name="index"
+        name="green-charging-stations"
         options={{
           title: "Green Charging",
           tabBarIcon: ({ color, size }) => (
@@ -62,7 +62,7 @@ export default function AppTabs() {
       <Tabs.Screen
         name="recycling-centers"
         options={{
-          title: "Recycling",
+          title: "Recycling Centers",
           tabBarIcon: ({ color, size }) => (
             <Fa6Icons name="recycle" size={size} color={color} />
           ),
@@ -71,7 +71,7 @@ export default function AppTabs() {
       <Tabs.Screen
         name="myhub"
         options={{
-          title: "My Hub",
+          title: "My NetZero",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="leaf" size={size} color={color} />
           ),
