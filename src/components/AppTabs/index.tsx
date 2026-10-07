@@ -58,18 +58,18 @@ export default function AppTabs() {
         }}
       />
       <Tabs.Screen
-        name="screen1"
+        name="screen2"
         options={{
-          title: "Screen 1",
+          title: "Screen 2",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="compass" size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="screen2"
+        name="myhub"
         options={{
-          title: "Screen 2",
+          title: "My Hub",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="compass" size={size} color={color} />
           ),

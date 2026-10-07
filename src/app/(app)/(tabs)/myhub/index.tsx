@@ -1,9 +1,9 @@
 import { Text, View } from "react-native";
 
-export default function Screen1() {
+export default function MyHub() {
   return (
     <View style={{ flex: 1 }}>
-      <Text>Screen 1</Text>
+      <Text>My Hub</Text>
     </View>
   );
 }
