@@ -1,6 +1,6 @@
 import { AuthStorage } from "@/auth/auth.utils";
-import { Button } from "@/components/Button";
-import { Header } from "@/components/Header";
+import { Button } from "@/components/button";
+import { Header } from "@/components/header";
 import { AuthQueries } from "@/services/service.auth";
 import { useQueryClient } from "@tanstack/react-query";
 import { Image } from "expo-image";

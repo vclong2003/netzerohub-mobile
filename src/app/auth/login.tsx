@@ -1,7 +1,7 @@
 import { AuthStorage } from "@/auth/auth.utils";
-import { Button } from "@/components/Button";
-import { Header } from "@/components/Header";
-import { TextInput } from "@/components/TextInput";
+import { Button } from "@/components/button";
+import { Header } from "@/components/header";
+import { TextInput } from "@/components/text-input";
 import { AuthMutations } from "@/services/service.auth";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";

@@ -1,11 +1,13 @@
-import { Button } from "@/components/Button";
-import { useLocationPermission } from "@/hooks/use-location-premission";
+import { Button } from "@/components/button";
+import { useLocationPermission } from "@/hooks/use-location-permission";
 import { MapTypes } from "@/types/types.map";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Mapbox from "@rnmapbox/maps";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Keyboard, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useGreenChargingStationsContext } from "./context";
+import { SearchBar } from "./search-bar";
 
 Mapbox.setAccessToken(MapTypes.MAPBOX_ACCESS_TOKEN);
 
@@ -37,20 +39,28 @@ const MOCK_STATIONS = [
   },
 ];
 
-export default function GreenChargingStations() {
+export function Map() {
   const { bottom } = useSafeAreaInsets();
   const { requestPermission } = useLocationPermission();
   const cameraRef = useRef(null);
   const [isFollowUserLocation, setIsFollowUserLocation] = useState(true);
+  const { setSelectedLotId, selectedLocation, setSelectedLocation } =
+    useGreenChargingStationsContext();
 
   useEffect(() => {
     requestPermission();
   }, []);
 
+  const zoomToCurrentLocation = useCallback(() => {
+    setSelectedLocation(undefined);
+    setIsFollowUserLocation(true);
+  }, [cameraRef, setIsFollowUserLocation]);
+
   console.log("GreenChargingStations rendered");
 
   return (
     <View style={{ flex: 1 }}>
+      <SearchBar />
       <Mapbox.MapView
         onTouchStart={Keyboard.dismiss}
         style={{ flex: 1 }}
@@ -60,12 +70,15 @@ export default function GreenChargingStations() {
         compassEnabled={true}
         compassFadeWhenNorth={false}
         compassPosition={{ bottom: bottom + 85, left: 20 }}
+        onCameraChanged={(event) => {
+          if (event.gestures.isGestureActive) setIsFollowUserLocation(false);
+        }}
         styleURL={MapTypes.MAPBOX_STYLE_URL}>
         <Mapbox.Camera
           ref={cameraRef}
           animationDuration={3000}
-          followUserLocation={true}
           followZoomLevel={16}
+          followUserLocation={isFollowUserLocation}
           allowUpdates
         />
 
@@ -76,12 +89,11 @@ export default function GreenChargingStations() {
             id={station.id}
             coordinate={station.coordinate}>
             <TouchableOpacity
-              activeOpacity={0.8}
               style={styles.markerContainer}
               onPress={() => console.log("Selected station:", station.name)}>
               <MaterialIcons
                 name="energy-savings-leaf"
-                size={20}
+                size={22}
                 color="#128085"
               />
             </TouchableOpacity>
@@ -104,7 +116,7 @@ export default function GreenChargingStations() {
       <Button
         variant="green"
         preIcon={<MaterialIcons name="my-location" size={24} color="#FFF" />}
-        // onPress={zoomToCurrentLocation}
+        onPress={zoomToCurrentLocation}
         style={styles.zoomBtn}
       />
     </View>

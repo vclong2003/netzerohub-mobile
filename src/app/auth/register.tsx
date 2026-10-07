@@ -1,5 +1,5 @@
-import { Header } from "@/components/Header";
-import { TextInput } from "@/components/TextInput";
+import { Header } from "@/components/header";
+import { TextInput } from "@/components/text-input";
 import { AuthMutations } from "@/services/service.auth";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -14,7 +14,7 @@ import EmailSvg from "@/assets/svgs/Envelope.svg";
 import EyeSvg from "@/assets/svgs/Eye.svg";
 import PasswordSvg from "@/assets/svgs/Lock.svg";
 
-import { Button } from "@/components/Button";
+import { Button } from "@/components/button";
 import { router } from "expo-router";
 import Toast from "react-native-toast-message";
 

@@ -1,5 +1,5 @@
 import LockSvg from "@/assets/svgs/Lock.svg";
-import { Button } from "@/components/Button";
+import { Button } from "@/components/button";
 import { router } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";

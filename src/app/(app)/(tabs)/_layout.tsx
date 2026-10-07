@@ -1,4 +1,4 @@
-import AppTabs from "@/components/AppTabs";
+import AppTabs from "@/components/apptabs";
 import { View } from "react-native";
 
 export default function TabsLayout() {

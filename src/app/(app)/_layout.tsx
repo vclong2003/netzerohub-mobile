@@ -1,4 +1,4 @@
-import { LoadingScreen } from "@/components/LoadingScreen";
+import { LoadingScreen } from "@/components/loading-screen";
 import { AuthQueries } from "@/services/service.auth";
 import { useAuthStore } from "@/states/states.auth";
 import { Redirect, Stack } from "expo-router";

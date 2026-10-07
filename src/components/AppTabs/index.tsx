@@ -9,7 +9,6 @@ import { StyleSheet } from "react-native";
 export default function AppTabs() {
   return (
     <Tabs
-      initialRouteName="green-charging-stations/index"
       screenOptions={{
         headerShown: false,
         tabBarBackground: () => (
@@ -51,7 +50,7 @@ export default function AppTabs() {
         animation: "shift",
       }}>
       <Tabs.Screen
-        name="green-charging-stations"
+        name="index"
         options={{
           title: "Green Charging",
           tabBarIcon: ({ color, size }) => (
