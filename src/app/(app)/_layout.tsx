@@ -1,4 +1,4 @@
-import { LoadingScreen } from "@/components/LoadingScreen";
+import { LoadingScreen } from "@/components/loading-screen";
 import { AuthQueries } from "@/services/service.auth";
 import { useAuthStore } from "@/states/states.auth";
 import { Redirect, Stack } from "expo-router";
@@ -23,7 +23,7 @@ export default function AppLayout() {
     <Stack
       screenOptions={{
         headerShown: false,
-        contentStyle: { flex: 1 },
+        contentStyle: { flex: 1, backgroundColor: "#fff" },
       }}
     />
   );

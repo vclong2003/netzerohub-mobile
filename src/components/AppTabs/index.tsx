@@ -1,8 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
-import { BlurView } from "expo-blur";
+import Fa6Icons from "@expo/vector-icons/FontAwesome6";
+
 import { Tabs } from "expo-router";
 import { PlatformPressable } from "expo-router/build/react-navigation";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 export default function AppTabs() {
   return (
@@ -10,12 +11,10 @@ export default function AppTabs() {
       screenOptions={{
         headerShown: false,
         tabBarBackground: () => (
-          <BlurView
-            intensity={40}
-            tint="light"
+          <View
             style={{
               ...StyleSheet.absoluteFill,
-              backgroundColor: "rgba(11, 10, 10, 0.2)",
+              backgroundColor: "rgb(255, 255, 255)",
             }}
           />
         ),
@@ -26,7 +25,7 @@ export default function AppTabs() {
           bottom: 24,
           borderRadius: 12,
           overflow: "hidden",
-          paddingTop: 8,
+          paddingTop: 10,
 
           backgroundColor: "transparent",
           borderTopWidth: 0,
@@ -39,39 +38,39 @@ export default function AppTabs() {
         ),
 
         tabBarLabelStyle: {
-          fontSize: 11,
+          fontSize: 12,
           fontWeight: "700",
         },
 
-        tabBarInactiveTintColor: "#fff",
+        tabBarInactiveTintColor: "#A0AEC0",
         tabBarActiveTintColor: "#128085",
 
-        animation: "shift",
+        animation: "fade",
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: "Green Charging",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" size={size} color={color} />
+            <Fa6Icons name="charging-station" size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="screen1"
+        name="recycling-centers"
         options={{
-          title: "Screen 1",
+          title: "Recycling Centers",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="compass" size={size} color={color} />
+            <Fa6Icons name="recycle" size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="screen2"
+        name="my-hub"
         options={{
-          title: "Screen 2",
+          title: "My NetZero",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="compass" size={size} color={color} />
+            <Ionicons name="leaf" size={size} color={color} />
           ),
         }}
       />

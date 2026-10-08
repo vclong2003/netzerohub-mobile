@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "netzerohubmobile",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "light",
     "platforms": ["ios", "android"],
     "ios": {
       "icon": "./assets/expo.icon"
@@ -30,7 +30,14 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
         }
-      ]
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Allow NetZeroHub to access your precise location for map navigation and local data."
+        }
+      ],
+      "@rnmapbox/maps"
     ],
     "experiments": {
       "typedRoutes": true,
