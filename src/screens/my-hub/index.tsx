@@ -2,6 +2,8 @@ import { AuthStorage } from "@/auth/auth.utils";
 import { Button } from "@/components/button";
 import { Header } from "@/components/header";
 import { AuthQueries } from "@/services/service.auth";
+import Entypo from "@expo/vector-icons/Entypo";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { useQueryClient } from "@tanstack/react-query";
 import { Image } from "expo-image";
 import { StyleSheet, Text, View } from "react-native";
@@ -9,10 +11,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import AvatarPlaceHolder from "@/assets/images/Profile.png";
-import BellSvg from "@/assets/svgs/BellBlack.svg";
-import CardBlackSvg from "@/assets/svgs/CardBlack.svg";
 import CaretRightBlackSvg from "@/assets/svgs/CaretRightBlack.svg";
-import GarageBlackSvg from "@/assets/svgs/GarageBlack.svg";
 import { router } from "expo-router";
 
 export function MyHub() {
@@ -53,7 +52,7 @@ export function MyHub() {
         <View style={{ height: 32 }} />
         <ScrollView style={styles.settingListWrapper}>
           {/* Notification ------------------------------------------------ */}
-          <View style={styles.settingItem}>
+          {/* <View style={styles.settingItem}>
             <View style={styles.settingItemRow}>
               <BellSvg width={24} height={24} />
               <Text style={styles.settingItemText}>Notification</Text>
@@ -64,12 +63,12 @@ export function MyHub() {
               style={styles.button}
               // onPress={() => navigate("Settings__Notification")}
             />
-          </View>
+          </View> */}
 
           {/* Vehicle List -------------------------------------------------- */}
           <View style={styles.settingItem}>
             <View style={styles.settingItemRow}>
-              <GarageBlackSvg width={24} height={24} />
+              <FontAwesome5 name="history" size={20} color="black" />
               <Text style={styles.settingItemText}>
                 Pollution Report History
               </Text>
@@ -82,8 +81,22 @@ export function MyHub() {
             />
           </View>
 
-          {/* Card List -------------------------------------------------- */}
+          {/* Vehicle List -------------------------------------------------- */}
           <View style={styles.settingItem}>
+            <View style={styles.settingItemRow}>
+              <Entypo name="text-document" size={22} color="black" />
+              <Text style={styles.settingItemText}>Terms & Conditions</Text>
+            </View>
+            <Button
+              variant="gray"
+              preIcon={<CaretRightBlackSvg width={16} height={16} />}
+              style={styles.button}
+              // onPress={() => navigate("Settings__Vehicle_List")}
+            />
+          </View>
+
+          {/* Card List -------------------------------------------------- */}
+          {/* <View style={styles.settingItem}>
             <View style={styles.settingItemRow}>
               <CardBlackSvg width={24} height={24} />
               <Text style={styles.settingItemText}>My Cards</Text>
@@ -94,7 +107,7 @@ export function MyHub() {
               style={styles.button}
               // onPress={() => navigate("Settings__SavedCards_List")}
             />
-          </View>
+          </View> */}
         </ScrollView>
       </View>
       <Button
