@@ -1,9 +1,17 @@
 import { useSearchLocation } from "@/hooks/use-search-location";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import Geolocation from "@react-native-community/geolocation";
 import { useEffect } from "react";
-import { Keyboard, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Keyboard,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useGreenChargingStationsContext } from "./context";
 
@@ -42,6 +50,10 @@ export function SearchBar() {
             }}
           />
         )}
+        <View style={{ width: 1 }} />
+        <TouchableOpacity>
+          <FontAwesome6 name="filter" size={18} color="#747474" />
+        </TouchableOpacity>
       </View>
 
       {!selectedLocation && query && suggestions.length > 0 && (
