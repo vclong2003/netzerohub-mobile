@@ -129,7 +129,7 @@ export function FloatingReportButton({
           <MaterialIcons
             name="report-gmailerrorred"
             size={26}
-            color="#1F2937"
+            color="#128085"
           />
         </View>
       </Animated.View>
