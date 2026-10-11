@@ -2,6 +2,7 @@ import { Button } from "@/components/button";
 import { Header } from "@/components/header";
 import { TextInput } from "@/components/text-input";
 import { reverseGeocode } from "@/utils/utils.location";
+import { useActionSheet } from "@expo/react-native-action-sheet";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Image } from "expo-image";
@@ -10,7 +11,12 @@ import { router } from "expo-router";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
-import { Asset, launchImageLibrary } from "react-native-image-picker";
+import {
+  Asset,
+  ImagePickerResponse,
+  launchCamera,
+  launchImageLibrary,
+} from "react-native-image-picker";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import {
   SafeAreaView,
@@ -52,6 +58,7 @@ export interface IPollutionReportPayload {
 
 export function PollutionReport() {
   const { bottom } = useSafeAreaInsets();
+  const { showActionSheetWithOptions } = useActionSheet();
   const [photo, setPhoto] = useState<Asset>();
   const [includeLocation, setIncludeLocation] = useState(false);
   const [isLocating, setIsLocating] = useState(false);
@@ -71,13 +78,58 @@ export function PollutionReport() {
     },
   });
 
+  const handleImageResponse = (response: ImagePickerResponse) => {
+    if (response.didCancel) return;
+
+    if (response.errorCode) {
+      Toast.show({
+        type: "error",
+        text1: "Camera Error",
+        text2:
+          response.errorMessage || "Permission denied or camera unavailable.",
+      });
+      return;
+    }
+
+    const asset = response.assets?.[0];
+    if (asset?.uri) {
+      setPhoto(asset);
+      setValue("image", asset);
+    }
+  };
+
+  const openCamera = () => {
+    launchCamera(
+      {
+        mediaType: "photo",
+        cameraType: "back",
+        saveToPhotos: false,
+        quality: 0.8,
+      },
+      handleImageResponse,
+    );
+  };
+
+  const openLibrary = () => {
+    launchImageLibrary(
+      {
+        mediaType: "photo",
+        selectionLimit: 1,
+        quality: 0.8,
+      },
+      handleImageResponse,
+    );
+  };
+
   const handlePickImage = () => {
-    launchImageLibrary({ mediaType: "photo", selectionLimit: 1 }).then(
-      ({ assets }) => {
-        const asset = assets?.[0];
-        if (!asset?.uri) return;
-        setPhoto(asset);
-        setValue("image", asset);
+    showActionSheetWithOptions(
+      {
+        options: ["Take Photo", "Choose from Library", "Cancel"],
+        cancelButtonIndex: 2,
+      },
+      (selectedIndex) => {
+        if (selectedIndex === 0) openCamera();
+        if (selectedIndex === 1) openLibrary();
       },
     );
   };

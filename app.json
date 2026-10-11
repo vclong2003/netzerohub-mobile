@@ -7,10 +7,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "netzerohubmobile",
     "userInterfaceStyle": "light",
-    "platforms": ["ios", "android"],
-    "ios": {
-      "icon": "./assets/expo.icon"
-    },
+    "platforms": ["android"],
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
@@ -19,7 +16,12 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.netzerohub.mobile"
+      "package": "com.netzerohub.mobile",
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.CAMERA"
+      ]
     },
     "plugins": [
       "expo-router",
@@ -42,6 +44,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "c84aeef9-ee76-4e06-9b5d-629d430e83ad"
+      }
     }
   }
 }
