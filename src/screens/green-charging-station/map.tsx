@@ -1,4 +1,5 @@
 import { Button } from "@/components/button";
+import { ProgressBar } from "@/components/progress-bar";
 import { useLocationPermission } from "@/hooks/use-location-permission";
 import {
   EStationStatus,
@@ -30,7 +31,7 @@ export function Map() {
     stationsFilter,
   } = useGreenChargingStationsContext();
 
-  const { data } = GreenChargingStationsQueries.useGetStations({
+  const { data, isFetching } = GreenChargingStationsQueries.useGetStations({
     page: 0,
     pageSize: 100,
     status: EStationStatus.Active,
@@ -68,6 +69,7 @@ export function Map() {
 
   return (
     <View style={{ flex: 1 }}>
+      <ProgressBar isLoading={isFetching} />
       <SearchBar />
       <Mapbox.MapView
         onTouchStart={Keyboard.dismiss}
