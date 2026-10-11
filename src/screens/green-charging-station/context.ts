@@ -1,8 +1,16 @@
+import { GreenChargingStationsQueries } from "@/services/service.green-charging-stations";
 import constate from "constate";
 import { useState } from "react";
 
+type TStationsFilter = Omit<
+  GreenChargingStationsQueries.IGetStationsPayload,
+  "name" | "page" | "pageSize" | "status"
+>;
+
 function useValues() {
-  const [selectedLotId, setSelectedLotId] = useState<number | undefined>();
+  const [selectedStationId, setSelectedStationId] = useState<
+    number | undefined
+  >();
   const [selectedLocation, setSelectedLocation] = useState<
     { lat: number; lon: number } | undefined
   >();
@@ -13,16 +21,27 @@ function useValues() {
     lat: undefined,
     lon: undefined,
   });
+  const [stationsFilter, setStationsFilter] = useState<TStationsFilter>({
+    renewableEnergyPercent: undefined,
+    plugType: undefined,
+  });
+  const [showFilterModal, setShowFilterModal] = useState(false);
 
   return {
-    selectedLotId,
-    setSelectedLotId,
+    selectedStationId,
+    setSelectedStationId,
 
     selectedLocation,
     setSelectedLocation,
 
     userLocation,
     setUserLocation,
+
+    stationsFilter,
+    setStationsFilter,
+
+    showFilterModal,
+    setShowFilterModal,
   };
 }
 

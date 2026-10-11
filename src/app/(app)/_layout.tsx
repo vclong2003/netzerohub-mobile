@@ -1,9 +1,6 @@
 import { LoadingScreen } from "@/components/loading-screen";
 import { AuthQueries } from "@/services/service.auth";
 import { Redirect, Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-
-SplashScreen.preventAutoHideAsync();
 
 export default function AppLayout() {
   const { isPending, data } = AuthQueries.useMyAccount();

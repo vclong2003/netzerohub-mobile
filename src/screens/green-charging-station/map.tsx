@@ -1,5 +1,10 @@
 import { Button } from "@/components/button";
+import { ProgressBar } from "@/components/progress-bar";
 import { useLocationPermission } from "@/hooks/use-location-permission";
+import {
+  EStationStatus,
+  GreenChargingStationsQueries,
+} from "@/services/service.green-charging-stations";
 import { MapTypes } from "@/types/types.map";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Mapbox from "@rnmapbox/maps";
@@ -8,44 +13,31 @@ import { Keyboard, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useGreenChargingStationsContext } from "./context";
 import { SearchBar } from "./search-bar";
+import { StationBottomSheet } from "./station-bottom-sheet";
+import { StationsFilterBottomSheet } from "./stations-filter-bottom-sheet";
 
 Mapbox.setAccessToken(MapTypes.MAPBOX_ACCESS_TOKEN);
-
-const MOCK_STATIONS = [
-  {
-    id: "station-p4",
-    name: "UOW P4 Western Carpark",
-    coordinate: [150.8745, -34.4035],
-  },
-  {
-    id: "station-unicentre",
-    name: "UOW UniCentre / Northfields Entrance",
-    coordinate: [150.8772, -34.4042],
-  },
-  {
-    id: "station-library",
-    name: "UOW Building 20 Library",
-    coordinate: [150.8795, -34.4055],
-  },
-  {
-    id: "station-smart",
-    name: "UOW SMART Infrastructure Facility",
-    coordinate: [150.8815, -34.4068],
-  },
-  {
-    id: "station-sports",
-    name: "UOW Sports Hub & Oval",
-    coordinate: [150.878, -34.4082],
-  },
-];
 
 export function Map() {
   const { bottom } = useSafeAreaInsets();
   const { requestPermission } = useLocationPermission();
   const cameraRef = useRef<Mapbox.Camera | null>(null);
   const [isFollowUserLocation, setIsFollowUserLocation] = useState(true);
-  const { setSelectedLotId, selectedLocation, setSelectedLocation } =
-    useGreenChargingStationsContext();
+  const {
+    selectedStationId,
+    setSelectedStationId,
+    selectedLocation,
+    setSelectedLocation,
+    stationsFilter,
+  } = useGreenChargingStationsContext();
+
+  const { data, isFetching } = GreenChargingStationsQueries.useGetStations({
+    page: 0,
+    pageSize: 100,
+    status: EStationStatus.Active,
+    ...stationsFilter,
+  });
+  const stations = data?.data || [];
 
   useEffect(() => {
     requestPermission();
@@ -55,8 +47,6 @@ export function Map() {
     setSelectedLocation(undefined);
     setIsFollowUserLocation(true);
   }, [cameraRef, setIsFollowUserLocation]);
-
-  console.log("GreenChargingStations rendered");
 
   const zoomToSelectedLocation = useCallback(() => {
     if (!selectedLocation) return;
@@ -79,6 +69,7 @@ export function Map() {
 
   return (
     <View style={{ flex: 1 }}>
+      <ProgressBar isLoading={isFetching} />
       <SearchBar />
       <Mapbox.MapView
         onTouchStart={Keyboard.dismiss}
@@ -102,22 +93,30 @@ export function Map() {
         />
 
         {/* Stations ------------------------------------------------ */}
-        {MOCK_STATIONS.map((station) => (
-          <Mapbox.MarkerView
-            key={station.id}
-            id={station.id}
-            coordinate={station.coordinate}>
-            <TouchableOpacity
-              style={styles.markerContainer}
-              onPress={() => console.log("Selected station:", station.name)}>
-              <MaterialIcons
-                name="energy-savings-leaf"
-                size={22}
-                color="#128085"
-              />
-            </TouchableOpacity>
-          </Mapbox.MarkerView>
-        ))}
+        {stations.map((station) => {
+          const isSelected = selectedStationId === station.id;
+          return (
+            <Mapbox.MarkerView
+              key={station.id}
+              id={station.id.toString()}
+              allowOverlap={true}
+              allowOverlapWithPuck={true}
+              coordinate={[station.longitude, station.latitude]}>
+              <TouchableOpacity
+                style={[
+                  styles.markerContainer,
+                  isSelected && styles.markerContainerSelected,
+                ]}
+                onPress={() => setSelectedStationId(station.id)}>
+                <MaterialIcons
+                  name="energy-savings-leaf"
+                  size={22}
+                  color={isSelected ? "#FFFFFF" : "#128085"}
+                />
+              </TouchableOpacity>
+            </Mapbox.MarkerView>
+          );
+        })}
 
         {/* User Location ------------------------------------------- */}
         <Mapbox.Images>
@@ -138,6 +137,12 @@ export function Map() {
         onPress={zoomToCurrentLocation}
         style={styles.zoomBtn}
       />
+
+      {/* Station Detail ------------------------------------------------- */}
+      <StationBottomSheet />
+
+      {/* Filter Modal --------------------------------------------------- */}
+      <StationsFilterBottomSheet />
     </View>
   );
 }
@@ -158,6 +163,11 @@ export const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
+  },
+
+  markerContainerSelected: {
+    backgroundColor: "#128085",
+    borderColor: "#FFFFFF",
   },
 
   userLocation: {

@@ -16,6 +16,7 @@ import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
 
 export function UpdateAccount() {
   const { bottom } = useSafeAreaInsets();
@@ -53,7 +54,10 @@ export function UpdateAccount() {
     }
     updateProfile(
       { ...values, avatarUrl: bucketUrl },
-      { onSuccess: router.back },
+      {
+        onSuccess: router.back,
+        onError: (error) => Toast.show({ type: "error", text1: error.message }),
+      },
     );
   };
 

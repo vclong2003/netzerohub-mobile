@@ -1,0 +1,146 @@
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  modal: {
+    justifyContent: "flex-end",
+    margin: 0,
+  },
+  container: {
+    backgroundColor: "#FFFFFF",
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    paddingHorizontal: 20,
+    elevation: 24,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -3 },
+    shadowOpacity: 0.15,
+    shadowRadius: 10,
+  },
+  pillContainer: {
+    alignItems: "center",
+    paddingVertical: 12,
+  },
+  pill: {
+    backgroundColor: "#D1D5DB",
+    width: 44,
+    height: 5,
+    borderRadius: 8,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 20,
+    marginTop: 4,
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: "#1F2937",
+  },
+  resetButtonText: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#6B7280",
+  },
+  sectionLabel: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#374151",
+    marginBottom: 10,
+  },
+  chipsRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    marginBottom: 20,
+  },
+  chip: {
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 12,
+    backgroundColor: "#F9FAFB",
+    borderWidth: 1.5,
+    borderColor: "#E5E7EB",
+  },
+  chipSelected: {
+    backgroundColor: "#128085",
+    borderColor: "#128085",
+  },
+  chipText: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: "#4B5563",
+  },
+  chipTextSelected: {
+    color: "#FFFFFF",
+  },
+  sliderHeaderRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  sliderValueText: {
+    fontSize: 15,
+    fontWeight: "700",
+  },
+  sliderControlWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 14,
+    marginBottom: 28,
+  },
+  leafIconContainer: {
+    width: 38,
+    alignItems: "center",
+  },
+  sliderTrackContainer: {
+    flex: 1,
+    height: 36,
+    justifyContent: "center",
+  },
+  sliderTrackBackground: {
+    height: 8,
+    backgroundColor: "#E5E7EB",
+    borderRadius: 4,
+  },
+  sliderTrackFilled: {
+    position: "absolute",
+    height: 8,
+    borderRadius: 4,
+  },
+  sliderThumb: {
+    position: "absolute",
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: "#FFFFFF",
+    borderWidth: 3,
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  },
+  actionsRow: {
+    marginTop: 4,
+  },
+  applyButton: {
+    backgroundColor: "#128085",
+    paddingVertical: 14,
+    borderRadius: 14,
+    alignItems: "center",
+    justifyContent: "center",
+    elevation: 3,
+    shadowColor: "#128085",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+  },
+  applyButtonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "700",
+  },
+});

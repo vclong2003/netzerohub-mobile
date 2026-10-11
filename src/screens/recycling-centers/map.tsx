@@ -6,45 +6,21 @@ import Mapbox from "@rnmapbox/maps";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Keyboard, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+  CenterBottomSheet,
+  MOCK_RECYCLING_CENTRES,
+} from "./center-bottom-sheet";
 import { useRecyclingCentersContext } from "./context";
 import { SearchBar } from "./search-bar";
 
 Mapbox.setAccessToken(MapTypes.MAPBOX_ACCESS_TOKEN);
-
-const MOCK_STATIONS = [
-  {
-    id: "station-p4",
-    name: "UOW P4 Western Carpark",
-    coordinate: [150.8745, -34.4035],
-  },
-  {
-    id: "station-unicentre",
-    name: "UOW UniCentre / Northfields Entrance",
-    coordinate: [150.8772, -34.4042],
-  },
-  {
-    id: "station-library",
-    name: "UOW Building 20 Library",
-    coordinate: [150.8795, -34.4055],
-  },
-  {
-    id: "station-smart",
-    name: "UOW SMART Infrastructure Facility",
-    coordinate: [150.8815, -34.4068],
-  },
-  {
-    id: "station-sports",
-    name: "UOW Sports Hub & Oval",
-    coordinate: [150.878, -34.4082],
-  },
-];
 
 export function Map() {
   const { bottom } = useSafeAreaInsets();
   const { requestPermission } = useLocationPermission();
   const cameraRef = useRef<Mapbox.Camera | null>(null);
   const [isFollowUserLocation, setIsFollowUserLocation] = useState(true);
-  const { setSelectedLotId, selectedLocation, setSelectedLocation } =
+  const { setSelectedCenterId, selectedLocation, setSelectedLocation } =
     useRecyclingCentersContext();
 
   useEffect(() => {
@@ -55,8 +31,6 @@ export function Map() {
     setSelectedLocation(undefined);
     setIsFollowUserLocation(true);
   }, [cameraRef, setIsFollowUserLocation]);
-
-  console.log("RecyclingCenters rendered");
 
   const zoomToSelectedLocation = useCallback(() => {
     if (!selectedLocation) return;
@@ -102,14 +76,16 @@ export function Map() {
         />
 
         {/* Stations ------------------------------------------------ */}
-        {MOCK_STATIONS.map((station) => (
+        {MOCK_RECYCLING_CENTRES.map((center) => (
           <Mapbox.MarkerView
-            key={station.id}
-            id={station.id}
-            coordinate={station.coordinate}>
+            key={center.id}
+            id={center.id.toString()}
+            allowOverlap={true}
+            allowOverlapWithPuck={true}
+            coordinate={[center.longitude, center.latitude]}>
             <TouchableOpacity
               style={styles.markerContainer}
-              onPress={() => console.log("Selected station:", station.name)}>
+              onPress={() => setSelectedCenterId(center.id)}>
               <MaterialIcons name="factory" size={22} color="#009369" />
             </TouchableOpacity>
           </Mapbox.MarkerView>
@@ -134,6 +110,8 @@ export function Map() {
         onPress={zoomToCurrentLocation}
         style={styles.zoomBtn}
       />
+
+      <CenterBottomSheet />
     </View>
   );
 }
