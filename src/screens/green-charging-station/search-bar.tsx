@@ -16,10 +16,20 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useGreenChargingStationsContext } from "./context";
 
 export function SearchBar() {
-  const { setSelectedLocation, selectedLocation } =
-    useGreenChargingStationsContext();
+  const {
+    setSelectedLocation,
+    selectedLocation,
+    setShowFilterModal,
+    stationsFilter,
+  } = useGreenChargingStationsContext();
   const { query, setQuery, suggestions, setUserLocation } = useSearchLocation();
   const { top } = useSafeAreaInsets();
+
+  const hasActiveFilters = Boolean(
+    stationsFilter?.plugType !== undefined ||
+    (stationsFilter?.renewableEnergyPercent !== undefined &&
+      stationsFilter.renewableEnergyPercent > 0),
+  );
 
   useEffect(() => {
     if (!query) return setSelectedLocation(undefined);
@@ -51,8 +61,12 @@ export function SearchBar() {
           />
         )}
         <View style={{ width: 1 }} />
-        <TouchableOpacity>
-          <FontAwesome6 name="filter" size={18} color="#747474" />
+        <TouchableOpacity onPress={() => setShowFilterModal(true)}>
+          <FontAwesome6
+            name="filter"
+            size={18}
+            color={hasActiveFilters ? "#128085" : "#747474"}
+          />
         </TouchableOpacity>
       </View>
 

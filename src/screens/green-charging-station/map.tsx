@@ -1,6 +1,9 @@
 import { Button } from "@/components/button";
 import { useLocationPermission } from "@/hooks/use-location-permission";
-import { GreenChargingStationsQueries } from "@/services/service.green-charging-stations";
+import {
+  EStationStatus,
+  GreenChargingStationsQueries,
+} from "@/services/service.green-charging-stations";
 import { MapTypes } from "@/types/types.map";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Mapbox from "@rnmapbox/maps";
@@ -10,6 +13,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useGreenChargingStationsContext } from "./context";
 import { SearchBar } from "./search-bar";
 import { StationBottomSheet } from "./station-bottom-sheet";
+import { StationsFilterBottomSheet } from "./stations-filter-bottom-sheet";
 
 Mapbox.setAccessToken(MapTypes.MAPBOX_ACCESS_TOKEN);
 
@@ -18,17 +22,20 @@ export function Map() {
   const { requestPermission } = useLocationPermission();
   const cameraRef = useRef<Mapbox.Camera | null>(null);
   const [isFollowUserLocation, setIsFollowUserLocation] = useState(true);
-  const { data } = GreenChargingStationsQueries.useGetStations({
-    page: 0,
-    pageSize: 100,
-  });
   const {
     selectedStationId,
     setSelectedStationId,
     selectedLocation,
     setSelectedLocation,
+    stationsFilter,
   } = useGreenChargingStationsContext();
 
+  const { data } = GreenChargingStationsQueries.useGetStations({
+    page: 0,
+    pageSize: 100,
+    status: EStationStatus.Active,
+    ...stationsFilter,
+  });
   const stations = data?.data || [];
 
   useEffect(() => {
@@ -39,8 +46,6 @@ export function Map() {
     setSelectedLocation(undefined);
     setIsFollowUserLocation(true);
   }, [cameraRef, setIsFollowUserLocation]);
-
-  console.log("GreenChargingStations rendered");
 
   const zoomToSelectedLocation = useCallback(() => {
     if (!selectedLocation) return;
@@ -133,6 +138,9 @@ export function Map() {
 
       {/* Station Detail ------------------------------------------------- */}
       <StationBottomSheet />
+
+      {/* Filter Modal --------------------------------------------------- */}
+      <StationsFilterBottomSheet />
     </View>
   );
 }
