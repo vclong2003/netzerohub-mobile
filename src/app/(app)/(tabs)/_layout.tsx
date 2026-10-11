@@ -1,4 +1,4 @@
-import AppTabs from "@/components/apptabs";
+import AppTabs from "@/components/app-tabs";
 import { FloatingReportButton } from "@/components/floating-report-button";
 import { useRouter } from "expo-router";
 import { View } from "react-native";
