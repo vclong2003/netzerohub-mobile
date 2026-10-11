@@ -92,6 +92,8 @@ export function Map() {
             <Mapbox.MarkerView
               key={station.id}
               id={station.id.toString()}
+              allowOverlap={true}
+              allowOverlapWithPuck={true}
               coordinate={[station.longitude, station.latitude]}>
               <TouchableOpacity
                 style={[

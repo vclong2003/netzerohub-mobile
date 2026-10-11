@@ -2,7 +2,9 @@ import constate from "constate";
 import { useState } from "react";
 
 function useValues() {
-  const [selectedLotId, setSelectedLotId] = useState<number | undefined>();
+  const [selectedCenterId, setSelectedCenterId] = useState<
+    number | undefined
+  >();
   const [selectedLocation, setSelectedLocation] = useState<
     { lat: number; lon: number } | undefined
   >();
@@ -15,8 +17,8 @@ function useValues() {
   });
 
   return {
-    selectedLotId,
-    setSelectedLotId,
+    selectedCenterId,
+    setSelectedCenterId,
 
     selectedLocation,
     setSelectedLocation,

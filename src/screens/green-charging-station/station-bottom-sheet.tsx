@@ -55,9 +55,6 @@ export function StationBottomSheet() {
   };
 
   const [activeCarouselIndex, setActiveCarouselIndex] = useState(0);
-  const [fullscreenImageIndex, setFullscreenImageIndex] = useState<
-    number | null
-  >(null);
 
   const { data: station, isPending } =
     GreenChargingStationsQueries.useGetStationById(selectedStationId);
@@ -65,7 +62,6 @@ export function StationBottomSheet() {
   useEffect(() => {
     setScrollOffset(0);
     setActiveCarouselIndex(0);
-    setFullscreenImageIndex(null);
   }, [selectedStationId]);
 
   useEffect(() => {
@@ -110,9 +106,7 @@ export function StationBottomSheet() {
     return Object.values(map);
   }, [station?.plugs]);
 
-  const handleClose = () => {
-    setSelectedStationId(undefined);
-  };
+  const handleClose = () => setSelectedStationId(undefined);
 
   const handleCarouselScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offset = e.nativeEvent.contentOffset.x;
@@ -197,17 +191,13 @@ export function StationBottomSheet() {
                   onScroll={handleCarouselScroll}
                   scrollEventThrottle={16}
                   keyExtractor={(_, index) => `img-${index}`}
-                  renderItem={({ item, index }) => (
-                    <TouchableOpacity
-                      activeOpacity={0.9}
-                      onPress={() => setFullscreenImageIndex(index)}>
-                      <Image
-                        source={{ uri: item }}
-                        style={styles.carouselImage}
-                        contentFit="cover"
-                        transition={200}
-                      />
-                    </TouchableOpacity>
+                  renderItem={({ item }) => (
+                    <Image
+                      source={{ uri: item }}
+                      style={styles.carouselImage}
+                      contentFit="cover"
+                      transition={200}
+                    />
                   )}
                 />
                 {station.imageUrls.length > 1 && (

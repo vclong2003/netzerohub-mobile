@@ -81,7 +81,7 @@ export const styles = StyleSheet.create({
   },
   carouselImage: {
     width: CAROUSEL_WIDTH,
-    height: 200,
+    height: 180,
     borderRadius: 14,
   },
   counterBadge: {
@@ -213,43 +213,6 @@ export const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "700",
-  },
-  fullscreenBackdrop: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.95)",
-    justifyContent: "center",
-  },
-  fullscreenHeader: {
-    position: "absolute",
-    left: 16,
-    right: 16,
-    zIndex: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  fullscreenCloseBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  fullscreenCounter: {
-    color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  fullscreenImageWrapper: {
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  fullscreenImage: {
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT * 0.75,
   },
 });
 

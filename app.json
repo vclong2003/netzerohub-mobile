@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "netzerohub-mobile",
+    "name": "NetZeroHub",
     "slug": "netzerohub-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -19,7 +19,7 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.netzerohubmobile"
+      "package": "com.netzerohub.mobile"
     },
     "plugins": [
       "expo-router",
