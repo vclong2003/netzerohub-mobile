@@ -197,6 +197,7 @@ export function StationBottomSheet() {
                       style={styles.carouselImage}
                       contentFit="cover"
                       transition={200}
+                      cachePolicy="memory-disk"
                     />
                   )}
                 />
