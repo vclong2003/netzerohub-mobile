@@ -1,3 +1,3 @@
-import { UpdateAccount } from "@/screens/my-hub/update-account";
+import { UpdateAccount } from "@/screens/update-account";
 
 export default UpdateAccount;

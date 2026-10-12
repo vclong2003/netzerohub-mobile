@@ -10,7 +10,7 @@ export default function TabsLayout() {
     <View style={{ flex: 1 }}>
       <AppTabs />
       <FloatingReportButton
-        onReportPress={() => router.navigate("/(app)/pollution-report")}
+        onReportPress={() => router.navigate("/pollution-report")}
       />
     </View>
   );
