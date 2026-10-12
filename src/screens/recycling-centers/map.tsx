@@ -1,15 +1,13 @@
 import { Button } from "@/components/button";
 import { useLocationPermission } from "@/hooks/use-location-permission";
+import { RecyclingCentresQueries } from "@/services/service.recycling-centres";
 import { MapTypes } from "@/types/types.map";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Mapbox from "@rnmapbox/maps";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Keyboard, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import {
-  CenterBottomSheet,
-  MOCK_RECYCLING_CENTRES,
-} from "./center-bottom-sheet";
+import { CenterBottomSheet } from "./center-bottom-sheet";
 import { useRecyclingCentersContext } from "./context";
 import { SearchBar } from "./search-bar";
 
@@ -22,6 +20,12 @@ export function Map() {
   const [isFollowUserLocation, setIsFollowUserLocation] = useState(true);
   const { setSelectedCenterId, selectedLocation, setSelectedLocation } =
     useRecyclingCentersContext();
+
+  const { data } = RecyclingCentresQueries.useGetRecyclingCentres({
+    page: 0,
+    pageSize: 100,
+  });
+  const centres = data?.data || [];
 
   useEffect(() => {
     requestPermission();
@@ -76,16 +80,16 @@ export function Map() {
         />
 
         {/* Stations ------------------------------------------------ */}
-        {MOCK_RECYCLING_CENTRES.map((center) => (
+        {centres.map((centre) => (
           <Mapbox.MarkerView
-            key={center.id}
-            id={center.id.toString()}
+            key={centre.id}
+            id={centre.id.toString()}
             allowOverlap={true}
             allowOverlapWithPuck={true}
-            coordinate={[center.longitude, center.latitude]}>
+            coordinate={[centre.longitude, centre.latitude]}>
             <TouchableOpacity
               style={styles.markerContainer}
-              onPress={() => setSelectedCenterId(center.id)}>
+              onPress={() => setSelectedCenterId(centre.id)}>
               <MaterialIcons name="factory" size={22} color="#009369" />
             </TouchableOpacity>
           </Mapbox.MarkerView>
