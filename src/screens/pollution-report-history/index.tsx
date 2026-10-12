@@ -48,7 +48,7 @@ export function PollutionReportHistory() {
 
     return (
       <View style={styles.card}>
-        {/* 1. Image on top if exists */}
+        {/* image ----------------------------------------- */}
         {item.imageUrl ? (
           <Image
             source={{ uri: item.imageUrl }}
@@ -60,7 +60,7 @@ export function PollutionReportHistory() {
         ) : null}
 
         <View style={styles.cardBody}>
-          {/* 2. Badge Row (Type chip & Status) */}
+          {/* badge --------------------------------------- */}
           <View style={styles.badgeRow}>
             <View style={styles.typeBadge}>
               <FontAwesome6 name="tag" size={10} color="#128085" />
@@ -76,7 +76,7 @@ export function PollutionReportHistory() {
             </View>
           </View>
 
-          {/* 3. Title & Description */}
+          {/* title desc ---------------------------------- */}
           <Text style={styles.cardTitle} numberOfLines={1}>
             {item.title}
           </Text>
@@ -84,8 +84,8 @@ export function PollutionReportHistory() {
             {item.description}
           </Text>
 
-          {/* 4. Footer Row (Location & createdAt) */}
           <View style={styles.cardFooter}>
+            {/* location ---------------------------------- */}
             {item.address ? (
               <View style={styles.locationContainer}>
                 <MaterialIcons name="place" size={14} color="#6B7280" />
@@ -97,6 +97,7 @@ export function PollutionReportHistory() {
               <View />
             )}
 
+            {/* created ----------------------------------- */}
             <Text style={styles.dateText}>
               {dayjs(item.createdAt).format("DD MMM YYYY, h:mm A")}
             </Text>
