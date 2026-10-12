@@ -51,20 +51,6 @@ export function MyHub() {
         </View>
         <View style={{ height: 32 }} />
         <ScrollView style={styles.settingListWrapper}>
-          {/* Notification ------------------------------------------------ */}
-          {/* <View style={styles.settingItem}>
-            <View style={styles.settingItemRow}>
-              <BellSvg width={24} height={24} />
-              <Text style={styles.settingItemText}>Notification</Text>
-            </View>
-            <Button
-              variant="gray"
-              preIcon={<CaretRightBlackSvg width={16} height={16} />}
-              style={styles.button}
-              // onPress={() => navigate("Settings__Notification")}
-            />
-          </View> */}
-
           {/* Vehicle List -------------------------------------------------- */}
           <View style={styles.settingItem}>
             <View style={styles.settingItemRow}>
@@ -77,7 +63,7 @@ export function MyHub() {
               variant="gray"
               preIcon={<CaretRightBlackSvg width={16} height={16} />}
               style={styles.button}
-              // onPress={() => navigate("Settings__Vehicle_List")}
+              onPress={() => router.push("/pollution-report-history")}
             />
           </View>
 
@@ -94,20 +80,6 @@ export function MyHub() {
               // onPress={() => navigate("Settings__Vehicle_List")}
             />
           </View>
-
-          {/* Card List -------------------------------------------------- */}
-          {/* <View style={styles.settingItem}>
-            <View style={styles.settingItemRow}>
-              <CardBlackSvg width={24} height={24} />
-              <Text style={styles.settingItemText}>My Cards</Text>
-            </View>
-            <Button
-              variant="gray"
-              preIcon={<CaretRightBlackSvg width={16} height={16} />}
-              style={styles.button}
-              // onPress={() => navigate("Settings__SavedCards_List")}
-            />
-          </View> */}
         </ScrollView>
       </View>
       <Button
