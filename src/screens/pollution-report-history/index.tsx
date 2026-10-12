@@ -16,14 +16,11 @@ import {
   Text,
   View,
 } from "react-native";
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { STATUS_CONFIG, styles } from "./index.styles";
 
 export function PollutionReportHistory() {
-  const { bottom } = useSafeAreaInsets();
+  const { bottom, top } = useSafeAreaInsets();
 
   const {
     data,
@@ -110,7 +107,7 @@ export function PollutionReportHistory() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#F9FAFB" }}>
+    <View style={{ flex: 1, backgroundColor: "#F9FAFB", paddingTop: top }}>
       <Header
         title="Your Pollution Reports"
         backButtonVisible
@@ -158,6 +155,6 @@ export function PollutionReportHistory() {
           }
         />
       )}
-    </SafeAreaView>
+    </View>
   );
 }
