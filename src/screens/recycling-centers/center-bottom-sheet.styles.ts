@@ -32,6 +32,11 @@ export const styles = StyleSheet.create({
     height: 5,
     borderRadius: 8,
   },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   scrollContent: {
     paddingBottom: 24,
   },
