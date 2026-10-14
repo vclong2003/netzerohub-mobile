@@ -77,8 +77,6 @@ export namespace AuthMutations {
   }
 
   export function useVerifyAccount() {
-    const queryClient = useQueryClient();
-
     return useMutation({
       mutationKey: ["useVerifyAccount"],
       mutationFn: (payload: IVerifyAccountPayload) =>

@@ -1,6 +1,11 @@
 import { Button } from "@/components/button";
 import { Header } from "@/components/header";
 import { TextInput } from "@/components/text-input";
+import {
+  EPollutionType,
+  PollutionReportMutations,
+} from "@/services/service.pollution-report";
+import { StorageMutations } from "@/services/service.storage";
 import { reverseGeocode } from "@/utils/utils.location";
 import { useActionSheet } from "@expo/react-native-action-sheet";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
@@ -25,14 +30,6 @@ import {
 import Toast from "react-native-toast-message";
 import { styles } from "./index.style";
 
-export enum EPollutionType {
-  Litter = "LITTER",
-  Land = "LAND",
-  Water = "WATER",
-  Air = "AIR",
-  Noise = "NOISE",
-}
-
 const POLLUTION_TYPE_OPTIONS = [
   {
     label: "Litter & Dumping",
@@ -45,11 +42,10 @@ const POLLUTION_TYPE_OPTIONS = [
   { label: "Noise", value: EPollutionType.Noise, icon: "volume-high" },
 ];
 
-export interface IPollutionReportPayload {
+interface FormValues {
   title: string;
   description: string;
   type: EPollutionType;
-  image?: Asset;
   coordinates?: {
     latitude: number;
     longitude: number;
@@ -59,18 +55,24 @@ export interface IPollutionReportPayload {
 export function PollutionReport() {
   const { bottom } = useSafeAreaInsets();
   const { showActionSheetWithOptions } = useActionSheet();
+
   const [photo, setPhoto] = useState<Asset>();
   const [includeLocation, setIncludeLocation] = useState(false);
   const [isLocating, setIsLocating] = useState(false);
   const [displayAddress, setDisplayAddress] = useState<string>("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // 1. API Mutations
+  const { mutateAsync: createReport, isPending: isCreating } =
+    PollutionReportMutations.useCreatePollutionReport();
+  const { mutateAsync: uploadFile, isPending: isUploading } =
+    StorageMutations.useUploadFile();
 
   const {
     control,
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<IPollutionReportPayload>({
+  } = useForm<FormValues>({
     defaultValues: {
       title: "",
       description: "",
@@ -94,7 +96,6 @@ export function PollutionReport() {
     const asset = response.assets?.[0];
     if (asset?.uri) {
       setPhoto(asset);
-      setValue("image", asset);
     }
   };
 
@@ -136,7 +137,6 @@ export function PollutionReport() {
 
   const handleRemoveImage = () => {
     setPhoto(undefined);
-    setValue("image", undefined);
   };
 
   const handleToggleLocation = async () => {
@@ -192,15 +192,41 @@ export function PollutionReport() {
     }
   };
 
-  const onSubmit = async (values: IPollutionReportPayload) => {
-    setIsSubmitting(true);
+  // 2. Real API Submission handler
+  const onSubmit = async (values: FormValues) => {
+    let uploadedBucketUrl: string | undefined;
 
+    // Step A: Upload photo to S3 first if selected
+    if (photo?.uri && photo?.fileName && photo?.type) {
+      try {
+        const uploadResult = await uploadFile({
+          file: {
+            uri: photo.uri,
+            name: photo.fileName,
+            type: photo.type,
+          },
+        });
+        uploadedBucketUrl = uploadResult?.bucketUrl;
+      } catch (err) {
+        console.error("Error uploading evidence photo:", err);
+        Toast.show({
+          type: "error",
+          text1: "Upload Failed",
+          text2: "Could not upload the evidence photo. Please try again.",
+        });
+        return; // Halt report creation if image upload fails
+      }
+    }
+
+    // Step B: Send report payload to backend
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      console.log("Mock Submitting Pollution Report Payload:", {
-        ...values,
-        imageFile: photo?.fileName,
+      await createReport({
+        title: values.title.trim(),
+        description: values.description.trim(),
+        type: values.type,
+        imageUrl: uploadedBucketUrl,
+        address: includeLocation && displayAddress ? displayAddress : undefined,
+        coordinates: includeLocation ? values.coordinates : undefined,
       });
 
       Toast.show({
@@ -209,16 +235,20 @@ export function PollutionReport() {
       });
 
       router.back();
-    } catch {
+    } catch (err: any) {
+      console.error("Error creating report:", err);
       Toast.show({
         type: "error",
         text1: "Submission Failed",
-        text2: "Please try again later.",
+        text2:
+          err?.response?.data?.message ||
+          err?.message ||
+          "Please check your connection and try again.",
       });
-    } finally {
-      setIsSubmitting(false);
     }
   };
+
+  const isPending = isUploading || isCreating;
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
@@ -374,9 +404,15 @@ export function PollutionReport() {
       {/* Submit Button --------------------------------------------------- */}
       <Button
         onPress={handleSubmit(onSubmit)}
-        disabled={isSubmitting || isLocating}
+        disabled={isPending || isLocating}
         variant="green"
-        text={isSubmitting ? "Submitting Report..." : "Submit Report"}
+        text={
+          isUploading
+            ? "Uploading Photo..."
+            : isCreating
+              ? "Submitting Report..."
+              : "Submit Report"
+        }
         style={[styles.submitButton, { bottom: bottom + 16 }]}
       />
     </SafeAreaView>

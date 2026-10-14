@@ -1,6 +1,6 @@
 import { Header } from "@/components/header";
 import {
-  IPollutionReportItem,
+  IPollutionReport, // 👈 1. Updated to match real API model
   PollutionReportQueries,
 } from "@/services/service.pollution-report";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
@@ -22,6 +22,7 @@ import { STATUS_CONFIG, styles } from "./index.styles";
 export function PollutionReportHistory() {
   const { bottom, top } = useSafeAreaInsets();
 
+  // 👈 2. Passed as payload object { pageSize: 6 }
   const {
     data,
     fetchNextPage,
@@ -30,8 +31,9 @@ export function PollutionReportHistory() {
     isLoading,
     refetch,
     isRefetching,
-  } = PollutionReportQueries.useGetMyReports(6);
+  } = PollutionReportQueries.useGetMyReports({ pageSize: 6 });
 
+  // Flatten infinite query pages into a single list
   const reports = useMemo(
     () => data?.pages.flatMap((page) => page.data) ?? [],
     [data],
@@ -43,8 +45,13 @@ export function PollutionReportHistory() {
     }
   };
 
-  const renderItem = ({ item }: { item: IPollutionReportItem }) => {
-    const statusTheme = STATUS_CONFIG[item.status];
+  const renderItem = ({ item }: { item: IPollutionReport }) => {
+    // Fallback in case the backend returns an unrecognized or unconfigured status
+    const statusTheme = STATUS_CONFIG[item.status] ?? {
+      label: item.status,
+      bg: "#F3F4F6",
+      text: "#6B7280",
+    };
 
     return (
       <View style={styles.card}>
@@ -124,7 +131,7 @@ export function PollutionReportHistory() {
         <FlatList
           data={reports}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()} // 👈 Handles both string and numeric IDs safely
           contentContainerStyle={[
             styles.listContent,
             { paddingBottom: Math.max(bottom, 20) },
