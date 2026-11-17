@@ -1,53 +1,57 @@
-<table>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/ceb4e666-2315-4b6c-b284-0432de2abb46" /></td>
-    <td><img src="https://github.com/user-attachments/assets/612b8b1f-2b18-48de-95ec-930a54bc3f35" /></td>
-    <td><img src="https://github.com/user-attachments/assets/01a0e79e-7a8e-4414-8f45-c399a30fba0e" /></td>
-  </tr>
-</table>
+# NetZeroHub Mobile App
 
-## `src` folder structure
+Mobile app for accessing NetZeroHub services, part of a microservices practice project.
 
-The main rule is to keep navigation, feature UI, reusable UI, and backend communication separate:
+- **Backend Repository:** [NetZeroHub Backend](https://github.com/vclong2003/netzerohub-backend)
+
+## Features & Screenshots
+
+### Authentication
+| Register | OTP Verification |
+| :---: | :---: |
+| ![Register](https://github.com/user-attachments/assets/435d6aca-8de4-406f-b156-3e0e8d49850e) | ![OTP Verification](https://github.com/user-attachments/assets/8583edae-39d6-441a-9675-21293b9d9bf9) |
+
+### Green Charging Stations
+| Charging Stations Map | Station Info |
+| :---: | :---: |
+| ![Stations Map](https://github.com/user-attachments/assets/d8696261-7c9a-4cc9-b195-115883ef2318) | ![Station Info Bottom Sheet](https://github.com/user-attachments/assets/4acf86b3-3a3e-424d-9645-37931e8f1fc2) |
+
+### Recycling Centres
+| Recycling Centres Map | Centre Info |
+| :---: | :---: |
+| ![Centres Map](https://github.com/user-attachments/assets/cfc536b2-f7db-4cf7-b6a1-916332332cf7) | ![Centre Info Bottom Sheet](https://github.com/user-attachments/assets/69d62b38-8378-4cf2-b254-7da7538f6128) |
+
+### Pollution Reports
+| Pollution Report | Pollution Report History |
+| :---: | :---: |
+| ![Pollution Report Form](https://github.com/user-attachments/assets/729aad36-861d-4c4f-8492-984697520a89) | ![Pollution Report History](https://github.com/user-attachments/assets/7a296ee2-078e-4acd-8a8e-0c5c2371111c) |
+
+## Project Structure (`src/`)
 
 | Folder           | Description                                                                                            |
 | ---------------- | ------------------------------------------------------------------------------------------------------ |
-| `src/app`        | Screen routes and navigation layouts. These files connect a URL/route to a screen.                     |
-| `src/screens`    | Screen codes, such as login, maps, recycling centres, charging stations, and My Hub.                   |
-| `src/components` | Reusable UI used by more than one screen, such as buttons, headers, inputs, loading screens, and tabs. |
-| `src/services`   | NetZero backend API calls, React Query hooks, API configuration, storage, and service-related types.   |
-| `src/hooks`      | Reusable React hooks for behaviour such as location permissions, device location, and searching.       |
-| `src/auth`       | Authentication helpers, token handling, and authentication specific types.                             |
-| `src/types`      | Shared TypeScript types used across multiple features, including API and map types.                    |
-| `src/utils`      | Small shared helper functions, such as debounce, text, location, and toast helpers.                    |
-| `src/states`     | Shared application state when a feature needs state outside its screen.                                |
+| `src/app`        | Expo Router routes and navigation layouts.                                                             |
+| `src/screens`    | Feature screens (login, maps, recycling centres, charging stations, My Hub).                           |
+| `src/components` | Shared reusable UI components (buttons, headers, inputs, loading states, tabs).                        |
+| `src/services`   | NetZero backend API clients, React Query hooks, and service types.                                     |
+| `src/hooks`      | Custom hooks (location permissions, device location, search).                                          |
+| `src/auth`       | Authentication helpers, token handling, and auth types.                                                |
+| `src/types`      | Shared TypeScript types across features.                                                               |
+| `src/utils`      | Shared helper functions (debounce, text, location, toast).                                             |
+| `src/states`     | Shared global application state.                                                                       |
 
-For a new feature, add its route in `src/app`, its screen code in `src/screens`, reusable UI in `src/components`, and its backend requests in `src/services`. Screens should use the service layer for NetZero API requests.
+## Getting Started
 
-## Get started
+**Prerequisites:** Node.js, Java 17 (for Android builds)
 
-- NodeJS, Java17 required
+1. Install dependencies:
 
-Install dependencies
+   ```bash
+   npm install
+   ```
 
-```bash
-npm install
-```
+2. Run on Android:
 
-Run the project on android
-
-```bash
-npm run android
-```
-
-Install additional packages
-
-```bash
-npx expo install <package-name>
-```
-
-Remove a package
-
-```bash
-npm remove <package-name>
-```
+   ```bash
+   npm run android
+   ```
